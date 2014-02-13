@@ -60,6 +60,6 @@ swCard *swDeckNextGet(swDeck *deck);
 void swCardPrint(swCard *card);
 uint8_t swCardValueGet(swCard *card);
 
-void swHandPrint(swHand *hand, bool all);
+void swHandPrint(swHand *hand, bool all, char *str);
 
 #endif

@@ -93,10 +93,12 @@ uint8_t swCardValueGet(swCard *card)
     return 0;
 }
 
-void swHandPrint(swHand *hand, bool all)
+void swHandPrint(swHand *hand, bool all, char *str)
 {
     if (hand)
     {
+        if (str)
+            printf("%s\n", str);
         if (all)
         {
             printf ("Cards: ");
