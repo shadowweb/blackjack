@@ -25,7 +25,7 @@ and whatever the additional constraints I could deduce from the problem statemen
 Build
 =====
 
-To build use a simple "make" command.
+The game was developed on Ubuntu Linux. To build use a simple "make" command.
 
 Play
 ====
