@@ -57,7 +57,7 @@ void swDeckShuffle(swDeck *deck)
 {
     if (deck)
     {
-        printf ("*** Deck Shuffle\n");
+        printf ("\n*** Deck Shuffle\n");
         for (uint8_t i = 0; i < DECK_SIZE; i++)
         {
             uint8_t position = rand()%DECK_SIZE;
@@ -108,7 +108,7 @@ void swHandPrint(swHand *hand, bool all, char *str)
         }
         else
         {
-            printf ("Last Card: ");
+            printf ("Cards: { X, X }");
             if (hand->count)
                 swCardPrint(hand->cards[hand->count - 1]);
             printf ("\n");
