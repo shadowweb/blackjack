@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
 #include "deck.h"
 
@@ -12,12 +13,10 @@ void gameEnd(bool playerWin, bool draw, swHand *playerHand, swHand *dealerHand)
 {
     gamesCount++;
     if (playerWin)
-    {
         playerWinCount++;
-        playerPercentageWin = (double)playerWinCount/(double)gamesCount;
-    }
     if (draw)
         playerDrawCount++;
+    playerPercentageWin = ((double)playerWinCount * 100.0)/(double)gamesCount;
     printf ("Game End: %s; Player Percentage Win: %f\n", ((playerWin)? "Player Won" : ((draw)? "Draw" : "Dealer Won" ) ), playerPercentageWin);
     swHandPrint(playerHand, true, "Player Hand:");
     swHandPrint(dealerHand, true, "Dealer Hand:");
@@ -42,18 +41,21 @@ bool deal(swDeck *deck, swHand *hand)
     return rtn;
 }
 
-enum
+typedef enum swAction
 {
     NONE,
     HIT,
     STAND,
     QUIT
-} action;
+} swAction;
 
-action getNextAction()
+swAction getNextAction()
 {
-    action rtn = NONE;
-    int actionChar = getchar();
+    swAction rtn = NONE;
+    char actionChar;
+    if (scanf("%c%*c", &actionChar) < 0)
+        printf ("scanf failed\n");
+    // int actionChar = getchar();
     if (actionChar == 'h')
         rtn = HIT;
     else if (actionChar == 's')
@@ -63,7 +65,7 @@ action getNextAction()
     return rtn;
 }
 
-int main(int argc, char *argv)
+int main(int argc, char *argv[])
 {
     srand(time(NULL));
     swDeck *deck = swDeckNew();
@@ -77,8 +79,9 @@ int main(int argc, char *argv)
             for (uint8_t i = 0; i < 6; i++)
             {
                 // play game
-                swHand player = {0};
-                swHand dealer = {0};
+                printf ("*** Game %u started\n", (i+1));
+                swHand player = {{NULL}, 0, 0, false};
+                swHand dealer = {{NULL}, 0, 0, false};
                 bool failure = false;
                 if (deal(deck, &player) && deal(deck, &dealer) && deal(deck, &player) && deal(deck, &dealer))
                 {
@@ -94,7 +97,7 @@ int main(int argc, char *argv)
                     }
                     else
                     {
-                        action playerAction = NONE;
+                        swAction playerAction = NONE;
                         while ((playerAction = getNextAction()) == HIT)
                         {
                             printf("Player choose HIT.\n");
@@ -131,6 +134,7 @@ int main(int argc, char *argv)
                                 else
                                 {
                                     printf("Dealer choose STAND.\n");
+                                    break;
                                 }
                             }
                             if (dealer.value <= 21)

@@ -6,7 +6,6 @@
 static char *swNameString[] =
 {
     "Ace",
-    "1",
     "2",
     "3",
     "4",
@@ -58,6 +57,7 @@ void swDeckShuffle(swDeck *deck)
 {
     if (deck)
     {
+        printf ("*** Deck Shuffle\n");
         for (uint8_t i = 0; i < DECK_SIZE; i++)
         {
             uint8_t position = rand()%DECK_SIZE;
@@ -98,7 +98,7 @@ void swHandPrint(swHand *hand, bool all, char *str)
     if (hand)
     {
         if (str)
-            printf("%s\n", str);
+            printf("%s ", str);
         if (all)
         {
             printf ("Cards: ");
